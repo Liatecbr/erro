@@ -19,6 +19,7 @@
             padding: 20px;
             max-width: 500px;
             margin: 20px auto;
+            display: none;
             opacity: 0;
             transition: opacity 1s ease-in-out;
         }
@@ -68,7 +69,7 @@
         .logo {
             display: block;
             margin: 0 auto 20px;
-            width: 200px;
+            width: 200px; /* Tamanho ajustado */
         }
         .chat-icon {
             position: fixed;
@@ -88,10 +89,44 @@
             height: 24px;
             fill: white;
         }
+        .loading {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .loading .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #28a745; /* Cor verde */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .loading span {
+            font-size: 20px;
+            color: #333;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <img class="logo" src="https://liatecbr.github.io/Liatec/download-removebg-preview.png" alt="LIATEC">
+    
+    <div class="loading">
+        <div class="spinner"></div>
+        <span>Verificando laudo...</span>
+    </div>
+
     <div class="container">
         <svg class="icon-fail" viewBox="0 0 24 24">
             <path fill="#dc3545" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.6 15.4l-1.4 1.4L12 13.4 8.8 16.6l-1.4-1.4L10.6 12 7.4 8.8l1.4-1.4L12 10.6l3.2-3.2 1.4 1.4L13.4 12l3.2 3.2z"/>
@@ -112,8 +147,12 @@
 
     <script>
         setTimeout(function() {
-            document.querySelector('.container').style.opacity = '1';
-            document.querySelector('.icon-fail').classList.add('visible');
+            document.querySelector('.loading').style.display = 'none';
+            document.querySelector('.container').style.display = 'block';
+            setTimeout(function() {
+                document.querySelector('.container').style.opacity = '1';
+                document.querySelector('.icon-fail').classList.add('visible');
+            }, 100); // Adiciona um pequeno delay para a transição suave
         }, 3000);
     </script>
 </body>
